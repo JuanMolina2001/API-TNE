@@ -35,6 +35,14 @@ app.get('/:rut/:numb', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+app.get('/', (req, res) => {
+  res.json({
+     message: 'API TNE',
+      endpoints: {
+        info: '/:rut/:numb',
+      }
+     });
+})
 
 app.listen(port, () => {
   console.log(`Servidor API escuchando en http://localhost:${port}`);
