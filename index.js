@@ -20,7 +20,7 @@ async function getData(rut, numb) {
   }
 
 
-app.get('/api/:rut/:numb', async (req, res) => {
+app.get('/:rut/:numb', async (req, res) => {
   try {
     const rut = req.params.rut;
     const numb = req.params.numb;
