@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tne-Api</title>
+</head>
+
+<body>
+
+    <h1> Documentación de la API</h1>
+
+    <h2> Descripción</h2>
+    <p>Esta API proporciona acceso a datos utilizando el RUT (Rol Único Tributario) como identificador. Permite obtener
+        información relacionada con el usuario correspondiente al RUT especificado.</p>
+
+    <h2> Endpoints</h2>
+
+    <h3> Obtener datos de un usuario por RUT</h3>
+    <pre>
+GET /api/:rut
+</pre>
+
+    <h4> Parámetros de ruta</h4>
+    <p>`rut`: El RUT del usuario del cual se desea obtener información. Se puede incluir un número adicional separado
+        por un guión (Ejemplo: `12345678-9`).</p>
+
+    <h4> Respuestas</h4>
+    <ul>
+        <li>200 OK:** Se devuelve un objeto JSON con los datos del usuario encontrado.</li>
+        <li>400 Bad Request:** Si no se encuentra ningún usuario correspondiente al RUT proporcionado.</li>
+        <li>500 Internal Server Error:** Si ocurre algún error interno del servidor durante la búsqueda de datos.</li>
+    </ul>
+    <h2> Ejemplo de uso</h2>
+
+    <h3> Obtener datos de un usuario</h3>
+    <pre>
+GET /api/12345678-9
+</pre>
+<div class="form">
+    <h4>Probar la API</h4>
+    <div>
+        <input type="text" name="rut" id="rut" placeholder="Ingrese un rut" >
+        <button>Buscar</button>
+    </div>
+</div> 
+    <h4> Respuesta exitosa</h4>
+    <pre id="response">
+{
+    "observaciones": "",
+    "apellidoPaterno": "apellidoPaterno",
+    "primerNombre": "primerNombre",
+    "tneFolio": "numero de folio",
+    "tnePeriodo": "",
+    "tneTipo": "SUPERIOR, MEDIA, BÁSICA",
+    "tneEstado": "estado de la tarjeta",
+    "lugarOficina": "",
+    "nota": "",
+    "soliPeriodo": "",
+    "soliProceso": "",
+    "soliFech": "fecha de la solicitud",
+    "soliTipo": "SUPERIOR, MEDIA, BÁSICA",
+    "soliEstado": "estado de la solicitud"
+}
+</pre>
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #222;
+        color: #fff;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    h3 {
+        font-size: 18px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    h4 {
+        font-size: 16px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    pre {
+        background-color: #333;
+        padding: 10px;
+        border-radius: 5px;
+        color: #fff;
+    }
+
+    ul {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    li {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .form{
+        margin-top: 20px;
+    }
+    .form div{
+        display: flex;
+    }
+    input{
+        padding: 5px; 
+        margin-right: 10px;
+    }
+    button{
+        padding: 5px; 
+        background-color: #333; 
+        color: #fff; 
+        border: none; 
+        cursor: pointer;
+    }
+</style>
+<script>
+    const button = document.querySelector('button');
+    const input = document.querySelector('input');
+    const response = document.querySelector('#response');
+    button.addEventListener('click', () => {
+        if (!input.value) {
+            alert('Ingrese un rut');
+            return;
+        }
+        const rut = input.value;
+        fetch(`/api/${rut}`)
+            .then(response => response.json())
+            .then(data => {
+                response.textContent = JSON.stringify(data, null, 4);
+            });
+    });
+</script>
+</html>

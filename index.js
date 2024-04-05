@@ -1,5 +1,6 @@
 const express = require('express');
 const parseInfo = require('./parseInfo');
+const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 const  { Agent, setGlobalDispatcher } = require('undici')
@@ -20,7 +21,7 @@ async function getData(rut, numb) {
   }
 
 
-app.get('/:rut', async (req, res) => {
+app.get('/api/:rut', async (req, res) => {
   try {
     const [rut, numb]= (req.params.rut).split('-');
     
@@ -35,13 +36,10 @@ app.get('/:rut', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+
 app.get('/', (req, res) => {
-  res.json({
-     message: 'API TNE',
-      endpoints: {
-        info: '/:rut (sin puntos y con guion)',
-      }
-     });
+  const htmlResponse = fs.readFileSync('./index.html', 'utf8');
+  res.send(htmlResponse);
 })
 
 app.listen(port, () => {
