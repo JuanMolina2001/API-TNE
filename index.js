@@ -1,7 +1,7 @@
 const express = require('express');
 const parseInfo = require('./parseInfo');
 const app = express();
-const port = 80;
+const port = process.env.PORT || 3000;
 const  { Agent, setGlobalDispatcher } = require('undici')
 
 const agent = new Agent({
