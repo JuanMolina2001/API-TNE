@@ -40,10 +40,10 @@ GET /api/12345678-9
 </pre>
 <div class="form">
     <h4>Probar la API</h4>
-    <div>
-        <input type="text" name="rut" id="rut" placeholder="Ingrese un rut" >
-        <button>Buscar</button>
+    <div class="container">
+        <p id="url"></p><input type="text" name="rut" id="rut" placeholder="rut" >
     </div>
+    <button>Buscar</button>
 </div> 
     <h4> Respuesta exitosa</h4>
     <pre id="response">
@@ -63,6 +63,7 @@ GET /api/12345678-9
     "soliTipo": "SUPERIOR, MEDIA, BÁSICA",
     "soliEstado": "estado de la solicitud"
 }
+
 </pre>
 </body>
 
@@ -118,14 +119,17 @@ GET /api/12345678-9
         margin-bottom: 5px;
     }
     .form{
-        margin-top: 20px;
-    }
-    .form div{
+
         display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
     input{
-        padding: 5px; 
-        margin-right: 10px;
+        padding: 5px;
+        height: 20px;
+        border: none; 
+        border-radius: 5px;
+
     }
     button{
         padding: 5px; 
@@ -133,9 +137,23 @@ GET /api/12345678-9
         color: #fff; 
         border: none; 
         cursor: pointer;
+        width: fit-content;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    .container{
+        margin-top: 10px;
+        background-color: #333;
+        display: flex;
+        gap: 10px;
+        padding-inline: 10px;
+        border-radius: 10px;
+        align-items: center;
+
     }
 </style>
 <script>
+    document.querySelector('#url').textContent = window.location.href + '/api/';
     const button = document.querySelector('button');
     const input = document.querySelector('input');
     const response = document.querySelector('#response');
