@@ -2,9 +2,18 @@ const express = require('express');
 const parseInfo = require('./parseInfo');
 const app = express();
 const port = 3000;
+const  { Agent, setGlobalDispatcher } = require('undici')
+
+const agent = new Agent({
+  connect: {
+    rejectUnauthorized: false
+  }
+})
+
+setGlobalDispatcher(agent)
 
 async function getData(rut, numb) {
-  const response = await fetch(`https://sistema.tne.cl/reposiciones/estado_tarjeta_alumno/tneEmitidas/${rut}/${numb}/0.5`)
+  const response = await fetch( `https://sistema.tne.cl/reposiciones/estado_tarjeta_alumno/tneEmitidas/${rut}/${numb}/0.5`);
   const data = await response.text()
   const result = parseInfo(data)
   return result
