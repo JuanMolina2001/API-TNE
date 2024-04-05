@@ -20,10 +20,10 @@ async function getData(rut, numb) {
   }
 
 
-app.get('/:rut/:numb', async (req, res) => {
+app.get('/:rut', async (req, res) => {
   try {
-    const rut = req.params.rut;
-    const numb = req.params.numb;
+    const [rut, numb]= (req.params.rut).split('-');
+    
     const result = await getData(rut, numb);
     if (result === null) {
       res.status(400).json({ error: 'Usuario no encontrado' });
@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
   res.json({
      message: 'API TNE',
       endpoints: {
-        info: '/:rut (sin puntos y numero verificador)/:dígito Verificador',
+        info: '/:rut (sin puntos y con guion)',
       }
      });
 })
