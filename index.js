@@ -28,7 +28,7 @@ app.get('/:rut/:numb', async (req, res) => {
     if (result === null) {
       res.status(400).json({ error: 'Usuario no encontrado' });
     } else {
-      res.json({ user: result });
+      res.json( result );
     }
   } catch (error) {
     console.error(error);
