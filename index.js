@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
   res.json({
      message: 'API TNE',
       endpoints: {
-        info: '/:rut/:numb',
+        info: '/:rut (sin puntos y numero verificador)/:dígito Verificador',
       }
      });
 })
