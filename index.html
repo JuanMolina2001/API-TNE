@@ -6,68 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tne-Api</title>
 </head>
-
-<body>
-
-    <h1> Documentación de la API</h1>
-
-    <h2> Descripción</h2>
-    <p>Esta API proporciona acceso a datos utilizando el RUT (Rol Único Tributario) como identificador. Permite obtener
-        información relacionada con el usuario correspondiente al RUT especificado.</p>
-
-    <h2> Endpoints</h2>
-
-    <h3> Obtener datos de un usuario por RUT</h3>
-    <pre>
-GET /api/:rut
-</pre>
-
-    <h4> Parámetros de ruta</h4>
-    <p>`rut`: El RUT del usuario del cual se desea obtener información. Se puede incluir un número adicional separado
-        por un guión (Ejemplo: `12345678-9`).</p>
-
-    <h4> Respuestas</h4>
-    <ul>
-        <li>200 OK:** Se devuelve un objeto JSON con los datos del usuario encontrado.</li>
-        <li>400 Bad Request:** Si no se encuentra ningún usuario correspondiente al RUT proporcionado.</li>
-        <li>500 Internal Server Error:** Si ocurre algún error interno del servidor durante la búsqueda de datos.</li>
-    </ul>
-    <h2> Ejemplo de uso</h2>
-
-    <h3> Obtener datos de un usuario</h3>
-    <pre>
-GET /api/12345678-9
-</pre>
-<div class="form">
-    <h4>Probar la API</h4>
-    <div class="container">
-        <p id="url"></p><input type="text" name="rut" id="rut" placeholder="rut" >
-    </div>
-    <button>Buscar</button>
-</div> 
-    <h4> Respuesta exitosa</h4>
-    <pre id="response">
-{
-    "observaciones": "",
-    "apellidoPaterno": "apellidoPaterno",
-    "primerNombre": "primerNombre",
-    "tneFolio": "numero de folio",
-    "tnePeriodo": "",
-    "tneTipo": "SUPERIOR, MEDIA, BÁSICA",
-    "tneEstado": "estado de la tarjeta",
-    "lugarOficina": "",
-    "nota": "",
-    "soliPeriodo": "",
-    "soliProceso": "",
-    "soliFech": "fecha de la solicitud",
-    "soliTipo": "SUPERIOR, MEDIA, BÁSICA",
-    "soliEstado": "estado de la solicitud"
-}
-
-</pre>
-</body>
-
 <style>
+    .copy {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .copyBtn {
+        border: none;
+        cursor: pointer;
+        width: fit-content;
+        border: #ffffff81 solid 0.5px;
+        padding: 2px;
+        border-radius: 5px;
+    }
+    .copyBtn:active {
+        scale: 0.9;
+    }
     body {
         font-family: Arial, sans-serif;
         margin: 20px;
@@ -118,45 +73,140 @@ GET /api/12345678-9
         margin-top: 5px;
         margin-bottom: 5px;
     }
-    .form{
+
+    .form {
 
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
-    input{
+
+    input {
         padding: 5px;
         height: 20px;
-        border: none; 
+        border: none;
         border-radius: 5px;
 
     }
-    button{
-        padding: 5px; 
-        background-color: #333; 
-        color: #fff; 
-        border: none; 
+
+    button {
+        padding: 5px;
+        background-color: #333;
+        color: #fff;
+        border: none;
         cursor: pointer;
         width: fit-content;
         padding: 15px;
         border-radius: 10px;
     }
-    .container{
+
+    .container {
         margin-top: 10px;
         background-color: #333;
         display: flex;
         gap: 10px;
-        padding-inline: 10px;
         border-radius: 10px;
-        align-items: center;
+        padding: 10px;
+        flex-direction: column;
 
     }
 </style>
+
+<body>
+
+    <h1> Documentación de la API</h1>
+
+    <h2> Descripción</h2>
+    <p>Esta API proporciona acceso a datos utilizando el RUT (Rol Único Tributario) como identificador. Permite obtener
+        información relacionada con el usuario correspondiente al RUT especificado.</p>
+
+    <h2> Endpoints</h2>
+
+    <h3> Obtener datos de un usuario por RUT</h3>
+    <pre>
+GET /api/:rut
+</pre>
+
+    <h4> Parámetros de ruta</h4>
+    <p>`rut`: El RUT del usuario del cual se desea obtener información. Se puede incluir un número adicional separado
+        por un guión (Ejemplo: `12345678-9`).</p>
+
+    <h4> Respuestas</h4>
+    <ul>
+        <li>200 OK:** Se devuelve un objeto JSON con los datos del usuario encontrado.</li>
+        <li>400 Bad Request:** Si no se encuentra ningún usuario correspondiente al RUT proporcionado.</li>
+        <li>500 Internal Server Error:** Si ocurre algún error interno del servidor durante la búsqueda de datos.</li>
+    </ul>
+    <h2> Ejemplo de uso</h2>
+
+    <h3> Obtener datos de un usuario</h3>
+    <pre>
+GET /api/12345678-9
+</pre>
+    <div class="form">
+        <h4>Probar la API</h4>
+        <input type="text" name="rut" id="rut" placeholder="rut" maxlength="12" style="width: 7rem;">
+        <div class="container">
+
+            <pre id="soli">
+   fetch('https://tne-api.fly.dev/api/<span>rut</span>')
+    .then(response => {
+        if(!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+    
+   
+</pre>
+            <div class="copy">
+                <button class="copyBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-copy">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+                        <path
+                            d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <button id="submit">Buscar</button>
+    </div>
+    <h4> Respuesta</h4>
+    <pre id="response">
+{
+    "observaciones": "",
+    "apellidoPaterno": "apellidoPaterno",
+    "primerNombre": "primerNombre",
+    "tneFolio": "numero de folio",
+    "tnePeriodo": "",
+    "tneTipo": "SUPERIOR, MEDIA, BÁSICA",
+    "tneEstado": "estado de la tarjeta",
+    "lugarOficina": "",
+    "nota": "",
+    "soliPeriodo": "",
+    "soliProceso": "",
+    "soliFech": "fecha de la solicitud",
+    "soliTipo": "SUPERIOR, MEDIA, BÁSICA",
+    "soliEstado": "estado de la solicitud"
+}
+
+</pre>
+</body>
 <script>
-    document.querySelector('#url').textContent = window.location.href + 'api/';
-    const button = document.querySelector('button');
-    const input = document.querySelector('input');
+    const button = document.querySelector('#submit');
+    const input = document.querySelector('#rut');
     const response = document.querySelector('#response');
+    const soli = document.querySelector('#soli');
     button.addEventListener('click', () => {
         if (!input.value) {
             alert('Ingrese un rut');
@@ -169,5 +219,32 @@ GET /api/12345678-9
                 response.textContent = JSON.stringify(data, null, 4);
             });
     });
+    const copyBtn = document.querySelector('.copyBtn');
+    const toast = (msg) => {
+        const toast = document.createElement('div');
+        toast.textContent = msg;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '10px';
+        toast.style.right = '10px';
+        toast.style.backgroundColor = '#33333385';
+        toast.style.color = '#fff';
+        toast.style.padding = '10px';
+        toast.style.borderRadius = '5px';
+        toast.style.zIndex = '1000';
+        toast.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+        toast.style.fontSize = '14px';
+
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.remove();
+        }, 2000);
+    }
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(soli.textContent);
+        toast('Copiado al portapapeles')
+    });
 </script>
+<script>
+</script>
+
 </html>
