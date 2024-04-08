@@ -1,5 +1,5 @@
 const express = require('express');
-const parseInfo = require('./parseInfo');
+const getData = require('./getData');
 const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,12 +13,6 @@ const agent = new Agent({
 
 setGlobalDispatcher(agent)
 
-async function getData(rut, numb) {
-  const response = await fetch( `https://sistema.tne.cl/reposiciones/estado_tarjeta_alumno/tneEmitidas/${rut}/${numb}/0.5`);
-  const data = await response.text()
-  const result = parseInfo(data)
-  return result
-  }
 
 
 app.get('/api/:rut', async (req, res) => {
